@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
+
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.hello {
+    text-align: center;
+    font-size: 400%;
+    font-weight: bolder;
+}
+
+.all-elements {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.element {
+    border: solid 1px black;
+    padding: 3%;
+    border-radius: 15%;
+    transition: .15s;
+    box-shadow: 5px 5px 5px grey;
+    margin: 1.5%;
+}
+
+.element:hover {
+    box-shadow: 10px 10px 10px grey;
+}
+
+.element-title {
+    font-size: 150%;
+    text-align: center;
+    text-transform: uppercase;
+    color: rgb(81, 81, 81);
+}
+
+.main-info {
+    display: flex;
+    justify-content: center;
+}
+
+.main-info > .value {
+    font-size: 500%;
+    font-weight: bold;
+}
+
+.main-info > .unit {
+    font-size: 300%;
+}
+
+.main-info > .value::before {
+    content: attr(data-value);
+}
+
+.main-info > .value.air-quality[data-value="3"] {
+    color: green;
+}
+
+.main-info > .value.air-quality[data-value="2"] {
+    color: gold;
+}
+
+.main-info > .value.air-quality[data-value="1"] {
+    color: darkorange;
+}
+
+.main-info > .value.air-quality[data-value="0"] {
+    color: darkred;
+}

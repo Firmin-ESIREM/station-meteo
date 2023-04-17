@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index_style.css') }}">
+    <title>Station météo</title>
+</head>
+<body>
+    <div class="intro">
+        <p class="hello">{{ greeting }}, {{ name }}.</p>
+    </div>
+    <div class="all-elements">
+        <div class="element">
+            <div class="element-title">
+                {{ temp_string }}
+            </div>
+            <div class="main-info">
+                <span class="value" data-value="{{ temp }}"></span>
+                <span class="unit">
+                    {{ temp_unit }}
+                </span>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="element-title">
+                {{ air_quality_string }}
+            </div>
+            <div class="main-info">
+                <span class="value air-quality" data-value="{{ air_quality }}"></span>
+                <span class="unit">
+                    {{ air_quality_unit }}
+                </span>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="element-title">
+                {{ pressure_string }}
+            </div>
+            <div class="main-info">
+                <span class="value" data-value="{{ pressure }}"></span>
+                <span class="unit">
+                    {{ pressure_unit }}
+                </span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
