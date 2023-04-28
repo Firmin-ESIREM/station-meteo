@@ -2,8 +2,6 @@ import sqlite3
 import mysql.connector
 from os import path
 from pathlib import Path
-import platform
-
 
 class Database():
 	def __init__(self, sqlite=True, user="", password="", host="", port="", database=""):
