@@ -36,8 +36,8 @@ void loop(void) {
     
       while(buttonCount==1){
         u8g2.clearBuffer();                  // boucle pour afficher la température  
-        u8g2.setFont(u8g2_font_ncenB08_tr);   
-        u8g2.drawStr(0,10,"température");    
+        u8g2.setFont(u8g2_font_ncenB12_tr);     
+        u8g2.drawStr(0,15,"Température");    
         u8g2.sendBuffer();
         delay(10);
         buttonState=digitalRead(buttonPin);   // test si nouveau clique
@@ -47,14 +47,17 @@ void loop(void) {
         delay(100);
         timer++;                // timer de 5s, si aucune action l'écran s'éteint
         if(timer==50){
+          buttonCount=0;
+          u8g2.clearBuffer(); 
+          u8g2.sendBuffer();
           break;
         }
       }
       timer=0;      
       while(buttonCount==2){
         u8g2.clearBuffer();                   
-        u8g2.setFont(u8g2_font_ncenB08_tr);   
-        u8g2.drawStr(0,10,"humidité");      // boucle pour afficher l'humidité 
+        u8g2.setFont(u8g2_font_ncenB12_tr);     
+        u8g2.drawStr(0,15,"Humidite");      // boucle pour afficher l'humidité 
         u8g2.sendBuffer();
         delay(10);
         buttonState=digitalRead(buttonPin);
@@ -64,14 +67,17 @@ void loop(void) {
         delay(100);
         timer++;
         if(timer==50){
+          buttonCount=0;
+          u8g2.clearBuffer(); 
+          u8g2.sendBuffer();
           break;
         } 
       }
       timer=0;
       while(buttonCount==3){
         u8g2.clearBuffer();                   
-        u8g2.setFont(u8g2_font_ncenB08_tr);   
-        u8g2.drawStr(0,10,"qualité");      // boucle pour afficher la qualité de l'air
+        u8g2.setFont(u8g2_font_ncenB12_tr);   
+        u8g2.drawStr(0,15,"Qualite");      // boucle pour afficher la qualité de l'air
         u8g2.sendBuffer();
         delay(10);
         buttonState=digitalRead(buttonPin);
@@ -81,6 +87,9 @@ void loop(void) {
         delay(100);
         timer++;
         if(timer==50){
+          buttonCount=0;
+          u8g2.clearBuffer();
+          u8g2.sendBuffer(); 
           break;
         } 
       } 
