@@ -1,4 +1,3 @@
-platform
 flask
 werkzeug
 sqlite3
