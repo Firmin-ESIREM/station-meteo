@@ -2,7 +2,7 @@
 #include "DHT.h"
 #include "Seeed_BMP280.h"
 #include <Wire.h>
-#include "Air_Quality_Sensor.h"
+
 
 
 // temperature et humidite
@@ -23,16 +23,16 @@ BMP280 bmp280;
 
 
 // qualite de l'air
-AirQualitySensor airQuality(A0);
+
 int current_quality =-1;
 
 
 void setup() {
 
-    Serial.begin(9600)
+    Serial.begin(9600);
 
     while(!Serial){
-      Serial.println("Waiting sensor to init...")
+      Serial.println("Waiting sensor to init...");
       delay(200000);        
     }
 
@@ -41,11 +41,7 @@ void setup() {
     Wire.begin();
     dht.begin();
 
-    if(airQuality.init()){
-      Serial.println("Sensor ready.");
-    }else{
-      Serial.println("Sensor ERROR")
-    }
+    
    
     if(!bmp280.init()){
     debug.println("Device error!");
@@ -87,19 +83,6 @@ float pressure;
   debug.println("m");
   
   
-  
-   int current_quality=airQuality.slope();
-    if (current_quality >= 0)// if a valid data returned.
-    {
-        if (current_quality==0)
-            Serial.println("High pollution! Force signal active");
-        else if (current_quality==1)
-            Serial.println("High pollution!");
-        else if (current_quality==2)
-            Serial.println("Low pollution!");
-        else if (current_quality ==3)
-            Serial.println("Fresh air");
-    }
   
   
   
