@@ -6,10 +6,21 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+.intro {
+    display: flex;
+    justify-content: center;
+}
+
 .hello {
     text-align: center;
-    font-size: 400%;
+    font-size: 600%;
     font-weight: bolder;
+    text-shadow: 3px 3px 3px grey;
+    transition: .15s;
+}
+
+.hello:hover {
+    text-shadow: 5px 5px 5px grey;
 }
 
 .all-elements {
@@ -20,11 +31,11 @@ body {
 
 .element {
     border: solid 1px black;
-    padding: 3%;
+    padding: 2vw;
     border-radius: 15%;
     transition: .15s;
     box-shadow: 5px 5px 5px grey;
-    margin: 1.5%;
+    margin: 1vw;
 }
 
 .element:hover {
@@ -41,6 +52,11 @@ body {
 .main-info {
     display: flex;
     justify-content: center;
+}
+
+.element-link {
+    color: inherit;
+    text-decoration: inherit;
 }
 
 .main-info > .value {
@@ -71,3 +87,18 @@ body {
 .main-info > .value.air-quality[data-value="0"] {
     color: darkred;
 }
+
+@media (prefers-color-scheme: dark) {
+    html {
+        background-color: #22202D;
+        color: #E5E2E2;
+        box-shadow: lightgray;
+        text-shadow: lightgray;
+    }
+
+    .element {
+        border: solid #E5E2E2 1px;
+    }
+
+}
+
