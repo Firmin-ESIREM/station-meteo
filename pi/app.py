@@ -1,9 +1,12 @@
 """This is the Flask app."""
 
 from flask import Flask, render_template
+from database import Database
 
 app = Flask(__name__)
 
+
+database = Database()
 
 @app.route("/")
 def home():
@@ -25,7 +28,20 @@ def home():
 
 @app.route("/add_data/", methods=['POST'])
 def add_data():
-    return ''
+    dictioniary = dict()
+    if "temperature" in request.form:
+        temperature = request.form["temperature"]
+        dictioniary["temperature"] = temperature
+    if "humidity" in request.form:
+        humidity = request.form["humidity"]
+        dictioniary["humidity"] = humidity
+    if "air_quality" in request.form:
+        air_quality = request.form["air_quality"]
+        dictioniary["air_quality"] = air_quality
+    if "pressure" in request.form:
+        pressure = request.form["pressure"]
+        dictioniary["pressure"] = pressure
+    database.add_data()
 
 
 if __name__ == "__main__":
