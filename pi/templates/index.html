@@ -12,41 +12,47 @@
         <p class="hello">{{ greeting }}, {{ name }}.</p>
     </div>
     <div class="all-elements">
-        <div class="element">
-            <div class="element-title">
-                {{ temp_string }}
+        <a href="./archive/?data=temperature" class="element-link">
+            <div class="element">
+                <div class="element-title">
+                    {{ temp_string }}
+                </div>
+                <div class="main-info">
+                    <span class="value" data-value="{{ temp }}"></span>
+                    <span class="unit">
+                        {{ temp_unit }}
+                    </span>
+                </div>
             </div>
-            <div class="main-info">
-                <span class="value" data-value="{{ temp }}"></span>
-                <span class="unit">
-                    {{ temp_unit }}
-                </span>
-            </div>
-        </div>
+        </a>
 
-        <div class="element">
-            <div class="element-title">
-                {{ air_quality_string }}
+        <a href="./archive/?data=air_quality" class="element-link">
+            <div class="element">
+                <div class="element-title">
+                    {{ air_quality_string }}
+                </div>
+                <div class="main-info">
+                    <span class="value air-quality" data-value="{{ air_quality }}"></span>
+                    <span class="unit">
+                        {{ air_quality_unit }}
+                    </span>
+                </div>
             </div>
-            <div class="main-info">
-                <span class="value air-quality" data-value="{{ air_quality }}"></span>
-                <span class="unit">
-                    {{ air_quality_unit }}
-                </span>
-            </div>
-        </div>
+        </a>
 
-        <div class="element">
-            <div class="element-title">
-                {{ pressure_string }}
+        <a href="./archive/?data=pressure" class="element-link">
+            <div class="element">
+                <div class="element-title">
+                    {{ pressure_string }}
+                </div>
+                <div class="main-info">
+                    <span class="value" data-value="{{ pressure }}"></span>
+                    <span class="unit">
+                        {{ pressure_unit }}
+                    </span>
+                </div>
             </div>
-            <div class="main-info">
-                <span class="value" data-value="{{ pressure }}"></span>
-                <span class="unit">
-                    {{ pressure_unit }}
-                </span>
-            </div>
-        </div>
+        </a>
     </div>
 </body>
 </html>
