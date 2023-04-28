@@ -3,6 +3,7 @@ import mysql.connector
 from os import path
 from pathlib import Path
 
+
 class Database:
 	def __init__(self, sqlite=True, user="", password="", host="", port="", database=""):
 		self.connection = None
@@ -19,14 +20,13 @@ class Database:
 													  database=database)
 		self.__create_tables__()
 
-<<<<<<< HEAD
-=======
 	
->>>>>>> 8da5b6372dc9ee0feca305e23b68cb848aa06584
 	def __create_tables__(self):
 		cursor = self.connection.cursor()
 		cursor.execute("CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY AUTOINCREMENT, temperature FLOAT, humidity FLOAT, air_quality INTEGER, pressure FLOAT)")
 		self.connection.commit()
 		cursor.close()
 
-	def add_data(self, dictioniary):
+
+	def add_data(self, dictionary):
+		pass
