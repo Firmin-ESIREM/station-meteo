@@ -54,20 +54,20 @@ def get_archived_data():
 
 @app.route("/add_data/", methods=['POST'])
 def add_data():
-    dictioniary = dict()
+    dictionary = dict()
     if "temperature" in request.form:
         temperature = request.form["temperature"]
-        dictioniary["temperature"] = temperature
+        dictionary["temperature"] = temperature
     if "humidity" in request.form:
         humidity = request.form["humidity"]
-        dictioniary["humidity"] = humidity
+        dictionary["humidity"] = humidity
     if "air_quality" in request.form:
         air_quality = request.form["air_quality"] # Qualité de l'air en entier
-        dictioniary["air_quality"] = air_quality
+        dictionary["air_quality"] = air_quality
     if "pressure" in request.form:
         pressure = request.form["pressure"] # Pression en flottant
-        dictioniary["pressure"] = pressure
-    database.add_data(dictioniary)
+        dictionary["pressure"] = pressure
+    database.add_data(dictionary)
 
 
 if __name__ == "__main__":
