@@ -2,7 +2,7 @@
 #include "DHT.h"
 #include "Seeed_BMP280.h"
 #include <Wire.h>
-#include "Air_Quality_Sensor.h"
+#include"AirQuality.h"
 
 
 // temperature et humidite
@@ -23,16 +23,16 @@ BMP280 bmp280;
 
 
 // qualite de l'air
-AirQualitySensor airQuality(A0);
+AirQuality airQuality(A0);
 int current_quality =-1;
 
 
 void setup() {
 
-    Serial.begin(9600)
+    Serial.begin(9600);
 
     while(!Serial){
-      Serial.println("Waiting sensor to init...")
+      Serial.println("Waiting sensor to init...");
       delay(200000);        
     }
 
@@ -41,10 +41,11 @@ void setup() {
     Wire.begin();
     dht.begin();
 
-    if(airQuality.init()){
+    if(airQuality.init(A0))
+    {
       Serial.println("Sensor ready.");
     }else{
-      Serial.println("Sensor ERROR")
+      Serial.println("Sensor ERROR");
     }
    
     if(!bmp280.init()){
