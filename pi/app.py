@@ -36,12 +36,12 @@ def add_data():
         humidity = request.form["humidity"]
         dictioniary["humidity"] = humidity
     if "air_quality" in request.form:
-        air_quality = request.form["air_quality"]
+        air_quality = request.form["air_quality"] # Qualité de l'air en entier
         dictioniary["air_quality"] = air_quality
     if "pressure" in request.form:
-        pressure = request.form["pressure"]
+        pressure = request.form["pressure"] # Pression en flottant
         dictioniary["pressure"] = pressure
-    database.add_data()
+    database.add_data(dictioniary)
 
 
 if __name__ == "__main__":
