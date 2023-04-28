@@ -1,13 +1,16 @@
 import sqlite3
 import mysql.connector
+from os import path
 from pathlib import Path
 import platform
+
+
 class Database():
 	def __init__(self, sqlite=True, user="", password="", host="", port="", database=""):
 		self.connection = None
 		if sqlite:
-			self.path = Path(__file__).parents[1] + "\\" if platform.system() == "Windows" else "/"
-			self.connection = sqlite3.connect(self.path + "database")
+			self.path = path.join(Path(__file__).parents[1], "database.db")
+			self.connection = sqlite3.connect(self.path)
 		else:
 			self.user = user
 			self.password = password
@@ -16,6 +19,8 @@ class Database():
 			self.database = database
 			self.connection = mysql.connector.connect(user=user, password=password, host=host, port=port, database=database)
 		self.__create_tables__()
+
+	
 	def __create_tables__(self):
 		cursor = self.connection.cursor()
 		cursor.execute("")

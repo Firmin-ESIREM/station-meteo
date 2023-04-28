@@ -1,0 +1,6 @@
+platform
+flask
+werkzeug
+sqlite3
+mysql
+pathlib
