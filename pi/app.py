@@ -29,13 +29,13 @@ def home():
 
 KINDS_OF_DATA = {
     'temperature': {
-        "name": "Température"
+        "name": "température"
     },
     'pressure': {
-        "name": "Pression"
+        "name": "pression"
     },
     'air_quality': {
-        "name": "Qualité de l’air"
+        "name": "qualité de l’air"
     }
 }
 
