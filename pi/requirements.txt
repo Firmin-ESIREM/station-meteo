@@ -1,5 +1,4 @@
 flask
 werkzeug
-sqlite3
 mysql-connector-python
 pathlib

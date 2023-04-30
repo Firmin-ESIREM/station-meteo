@@ -11,19 +11,24 @@ database = Database()
 
 @app.route("/")
 def home():
+    # data = database.get_last_data()
+    data = {"temperature": 20.0, "humidity": 75.0, "air_quality": 2, "pressure": 10012.0}
     return render_template(
         "index.html",
         greeting="Bonjour",
         name="Firmin",
         temp_string="Température",
-        temp="19,2",
+        temp=str(data["temperature"]),
         temp_unit="°C",
         air_quality_string="Qualité de l’air",
-        air_quality="0",
+        air_quality=str(data["air_quality"]),
         air_quality_unit="/3",
         pressure_string="Pression ambiante",
-        pressure="1,01",
-        pressure_unit="\xa0bar"
+        pressure=str(data["pressure"]),
+        pressure_unit="\xa0bar",
+        humidity_string="Taux d'humidité",
+        humidity=str(data["humidity"]),
+        humidity_unit="%"
     )
 
 
@@ -36,6 +41,9 @@ KINDS_OF_DATA = {
     },
     'air_quality': {
         "name": "qualité de l’air"
+    },
+    'humidity': {
+        "name": "humidité"
     }
 }
 
@@ -71,4 +79,4 @@ def add_data():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=12345)
+    app.run(host="0.0.0.0", port=1234)

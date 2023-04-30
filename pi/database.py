@@ -10,7 +10,7 @@ class Database:
 		self.datas = ["temperature", "humidity", "air_quality", "pressure", "datetime"]  # [] { }
 		if sqlite:
 			self.path = path.join(Path(__file__).parents[1], "database.db")
-			self.connection = sqlite3.connect(self.path)
+			self.connection = sqlite3.connect(self.path, check_same_thread=False)
 		else:
 			self.user = user
 			self.password = password
