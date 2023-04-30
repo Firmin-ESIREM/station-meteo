@@ -16,7 +16,7 @@
   The response body contains JSON showing the values and headers received by the httpbin
   server. Example follows.
   
-making POST request
+making POST request//temperature,air_quality, pressure, humidity
 Status code: 200
 Response: {
   "args": {}, 
