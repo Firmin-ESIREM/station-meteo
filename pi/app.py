@@ -11,8 +11,8 @@ database = Database()
 
 @app.route("/")
 def home():
-    # data = database.get_last_data()
-    data = {"temperature": 20.0, "humidity": 75.0, "air_quality": 2, "pressure": 10012.0}
+    data = database.get_last_data()
+    print(data)
     return render_template(
         "index.html",
         greeting="Bonjour",
