@@ -10,7 +10,7 @@ class Database:
 		self.datas = ["temperature", "humidity", "air_quality", "pressure", "datetime"]  # [] { }
 		if sqlite:
 			self.path = path.join(Path(__file__).parents[1], "database.db")
-			self.connection = sqlite3.connect(self.path)
+			self.connection = sqlite3.connect(self.path, check_same_thread=False)
 		else:
 			self.user = user
 			self.password = password
@@ -40,6 +40,7 @@ class Database:
 		cursor.execute("SELECT * FROM data")
 		values = cursor.fetchall()
 		cursor.close()
+		# TODO vérifier comment sort les données dans values
 		return {data: value for data, value in zip(self.datas, values)}
 
 	def get_last_data(self):
@@ -47,4 +48,6 @@ class Database:
 		cursor.execute("SELECT * FROM data ORDER BY id DESC LIMIT 1")
 		values = cursor.fetchone()
 		cursor.close()
+		if values is None:
+			return {data: None for data in self.datas} 
 		return {data: value for data, value in zip(self.datas, values)}

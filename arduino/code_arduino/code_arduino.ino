@@ -2,8 +2,8 @@
 #include "DHT.h"
 #include "Seeed_BMP280.h"
 #include <Wire.h>
-
-
+<<<<<<< HEAD
+#include"AirQuality.h"
 
 // temperature et humidite
 #define DHTTYPE DHT10 
@@ -23,7 +23,6 @@ BMP280 bmp280;
 
 
 // qualite de l'air
-
 int current_quality =-1;
 
 
@@ -41,8 +40,6 @@ void setup() {
     Wire.begin();
     dht.begin();
 
-    
-   
     if(!bmp280.init()){
     debug.println("Device error!");
 

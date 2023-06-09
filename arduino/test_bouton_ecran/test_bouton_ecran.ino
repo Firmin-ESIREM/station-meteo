@@ -17,14 +17,39 @@ int timer=0;
 U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* clock=*/ SCL, /* data=*/ SDA, /* reset=*/ U8X8_PIN_NONE);  // High speed I2C
 
 
+#include "DHT.h"
+#include "Seeed_BMP280.h"
+#include <Wire.h>
+
+#define DHTTYPE DHT10 
+DHT dht(DHTTYPE);
+
+#if defined(ARDUINO_ARCH_AVR)
+    #define debug  Serial
+
+#elif defined(ARDUINO_ARCH_SAMD) ||  defined(ARDUINO_ARCH_SAM)
+    #define debug  SerialUSB
+#else
+    #define debug  Serial
+#endif
+
+BMP280 bmp280;
+
+
+
+
+
 
 void setup(void) {
   u8g2.begin();
   pinMode(buttonPin, INPUT);
+  Wire.begin();
+  dht.begin();
 }
 
 void loop(void) {
   
+  float temp_hum_val[2] = {0};
   while(true){
 
     u8g2.clearBuffer();
@@ -36,25 +61,34 @@ void loop(void) {
     
       while(buttonCount==1){
         u8g2.clearBuffer();                  // boucle pour afficher la température  
-        u8g2.setFont(u8g2_font_ncenB08_tr);   
-        u8g2.drawStr(0,10,"température");    
+        u8g2.setFont(u8g2_font_ncenB12_tr);
+        int temp;
+        temp=temp_hum_val[1];
+        u8g2.drawStr(0,15, "Temperature"); 
+        u8g2.drawStr(0,30,temp);    
         u8g2.sendBuffer();
         delay(10);
         buttonState=digitalRead(buttonPin);   // test si nouveau clique
         if(buttonState==HIGH){
-          buttonCount++;
+          buttonCount+=1;
         }
         delay(100);
         timer++;                // timer de 5s, si aucune action l'écran s'éteint
         if(timer==50){
+          buttonCount=0;
+          u8g2.clearBuffer(); 
+          u8g2.sendBuffer();
           break;
         }
       }
       timer=0;      
       while(buttonCount==2){
         u8g2.clearBuffer();                   
-        u8g2.setFont(u8g2_font_ncenB08_tr);   
-        u8g2.drawStr(0,10,"humidité");      // boucle pour afficher l'humidité 
+        u8g2.setFont(u8g2_font_ncenB12_tr);
+        int humidity;
+        humidity=temp_hum_val[0];   
+        u8g2.drawStr(0,15, "Humidity");  
+        u8g2.drawStr(0,30,humidity);      // boucle pour afficher l'humidité 
         u8g2.sendBuffer();
         delay(10);
         buttonState=digitalRead(buttonPin);
@@ -64,14 +98,63 @@ void loop(void) {
         delay(100);
         timer++;
         if(timer==50){
+          buttonCount=0;
+          u8g2.clearBuffer(); 
+          u8g2.sendBuffer();
           break;
         } 
       }
       timer=0;
       while(buttonCount==3){
         u8g2.clearBuffer();                   
-        u8g2.setFont(u8g2_font_ncenB08_tr);   
-        u8g2.drawStr(0,10,"qualité");      // boucle pour afficher la qualité de l'air
+        u8g2.setFont(u8g2_font_ncenB12_tr);
+        u8g2.drawStr(0,15,"Air pressure");     
+        u8g2.drawStr(0,30,bmp280.getPressure()/100);      // boucle pour afficher l'humidité 
+        u8g2.sendBuffer();
+        delay(10);
+        buttonState=digitalRead(buttonPin);
+        if(buttonState==HIGH){
+          buttonCount+=1;
+        }
+        delay(100);
+        timer++;
+        if(timer==50){
+          buttonCount=0;
+          u8g2.clearBuffer(); 
+          u8g2.sendBuffer();
+          break;
+        } 
+      }
+      timer=0;
+      while(buttonCount==4){
+        u8g2.clearBuffer();                   
+        u8g2.setFont(u8g2_font_ncenB12_tr);
+        int pressure;
+        pressure = bmp280.getPressure();
+        int altitude;
+        altitude =bmp280.calcAltitude(pressure); 
+        u8g2.drawStr(0,15,"Altitude");    
+        u8g2.drawStr(0,30,altitude);      // boucle pour afficher l'humidité 
+        u8g2.sendBuffer();
+        delay(10);
+        buttonState=digitalRead(buttonPin);
+        if(buttonState==HIGH){
+          buttonCount+=1;
+        }
+        delay(100);
+        timer++;
+        if(timer==50){
+          buttonCount=0;
+          u8g2.clearBuffer(); 
+          u8g2.sendBuffer();
+          break;
+        } 
+      }
+      timer=0;
+      while(buttonCount==5){
+        u8g2.clearBuffer();                   
+        u8g2.setFont(u8g2_font_ncenB12_tr);   
+        u8g2.drawStr(0,15,"Air quality");      // boucle pour afficher la qualité de l'air
         u8g2.sendBuffer();
         delay(10);
         buttonState=digitalRead(buttonPin);
@@ -81,6 +164,9 @@ void loop(void) {
         delay(100);
         timer++;
         if(timer==50){
+          buttonCount=0;
+          u8g2.clearBuffer();
+          u8g2.sendBuffer(); 
           break;
         } 
       } 
