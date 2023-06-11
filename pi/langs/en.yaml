@@ -1,0 +1,8 @@
+app-name: "weather station"
+temperature-string: "temperature"
+air_quality-string: "air quality"
+pressure-string: "pressure"
+humidity-string: "humidity"
+greeting-morning: "good morning"
+greeting-afternoon: "good afternoon"
+greeting-evening: "good evening"

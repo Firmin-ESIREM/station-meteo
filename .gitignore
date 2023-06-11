@@ -238,3 +238,4 @@ cython_debug/
 #.idea/
 
 database.db
+pi/config.ini
