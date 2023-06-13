@@ -5,6 +5,7 @@ from werkzeug.exceptions import BadRequest
 from database import Database
 from configparser import ConfigParser
 from yaml import safe_load
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -60,18 +61,15 @@ print(DATA_SPEC)
 def home():
     global DATA_SPEC
     lang = request.accept_languages.best_match(langs.keys())
-    print(lang)
     if lang is None:
-        print('defaulting to english')
         lang = "en"
-    data = request.args.get("data")
     data = database.get_last_data()
-    # print(data)
     for k in range(len(DATA_SPEC)):
         # print(data_spec[k])
         # print(data_spec[k]["value"])
-        DATA_SPEC[k]["value"] = data[el]
         DATA_SPEC[k]["title"] = langs[lang][DATA_SPEC[k]["name"] + "-string"]
+        DATA_SPEC[k]["value"] = data[DATA_SPEC[k]["name"]]
+    print(DATA_SPEC)
     return render_template(
         "index.html",
         lang=lang,
@@ -86,32 +84,54 @@ def home():
 @app.route("/archive/")
 def get_archived_data():
     global DATA_SPEC
+    lang = request.accept_languages.best_match(langs.keys())
+    if lang is None:
+        print('defaulting to english')
+        lang = "en"
     data = request.args.get("data")
     if data not in [d["name"] for d in DATA_SPEC]:
         return BadRequest
-    else:
-        return render_template(
-            "archive.html",
-            data_name=langs[lang][data].capitalize()
-        )
+    return render_template(
+        "archive.html",
+        data_name=langs[lang][f"{data}-string"],
+        data_title=data
+    )
+
+
+@app.route("/archive_script.js")
+def archive_script():
+    data = request.args.get("data")
+    print(data)
+    if data not in [d["name"] for d in DATA_SPEC]:
+        print('bad request')
+        return "nope", 403
+    all_data = database.get_all_datas(data)
+    return render_template(
+        "archive_script.js",
+        chart_data=all_data
+    )
 
 
 @app.route("/add_data/", methods=['POST'])
 def add_data():
     dictionary = dict()
-    if "temperature" in request.form:
-        temperature = request.form["temperature"]
+    if "temperature" in request.json.keys():
+        temperature = float(request.json["temperature"])
+        temperature = round(temperature, 1)
         dictionary["temperature"] = temperature
-    if "humidity" in request.form:
-        humidity = request.form["humidity"]
+    if "humidity" in request.json.keys():
+        humidity = float(request.json["humidity"])
+        humidity = round(humidity, 1)
         dictionary["humidity"] = humidity
-    if "air_quality" in request.form:
-        air_quality = request.form["air_quality"] # Qualité de l'air en entier
+    if "air_quality" in request.json.keys():
+        air_quality = int(request.json["air_quality"])  # Qualité de l'air en entier
+
         dictionary["air_quality"] = air_quality
-    if "pressure" in request.form:
-        pressure = request.form["pressure"] # Pression en flottant
+    if "pressure" in request.json.keys():
+        pressure = int(request.json["pressure"])  # Pression en flottant
         dictionary["pressure"] = pressure
     database.add_data(dictionary)
+    return 'OK', 201
 
 
 if __name__ == "__main__":
