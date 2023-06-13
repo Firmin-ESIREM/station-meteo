@@ -17,7 +17,8 @@
   server. Example follows.
   
 making POST request//temperature,air_quality, pressure, humidity
-Status code: 200
+
+//Status code: 200
 Response: {
   "args": {}, 
   "data": "", 
@@ -41,11 +42,11 @@ Response: {
 
 ///////please enter your sensitive data in the Secret tab/arduino_secrets.h
 /////// Wifi Settings ///////
-char ssid[] = "TP-Link_5CF0";
-char pass[] = "42483557";
+char ssid[] = "raspi-webgui";
+char pass[] = "thomasgiroud07";
 
-const char serverName[] = "192.168.0.29";  // server name
-int port = 1234;
+const char serverName[] = "10.3.141.1";  // server name
+int port = 8080;
 
 WiFiClient wifi;
 HttpClient client = HttpClient(wifi, serverName, port);

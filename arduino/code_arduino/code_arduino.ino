@@ -2,7 +2,6 @@
 #include "DHT.h"
 #include "Seeed_BMP280.h"
 #include <Wire.h>
-<<<<<<< HEAD
 #include"AirQuality.h"
 
 // temperature et humidite
