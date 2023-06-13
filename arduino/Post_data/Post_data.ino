@@ -21,7 +21,7 @@
 char ssid[] = SECRET_SSID;
 char pass[] = SECRET_PASS;
 
-char serverAddress[] = "192.168.236.246";  // server address
+char serverAddress[] = "10.0.0.7";  // server address
 int port = 7657;
 
 WiFiClient wifi;
@@ -55,12 +55,14 @@ void setup() {
 
 void loop() {
   status = WiFi.status();
-   while ( status != WL_CONNECTED) {
+  while ( status != WL_CONNECTED) {
+    WiFi.end();
+    WiFi.disconnect();
     Serial.print("Attempting to connect to Network named: ");
     Serial.println(ssid);                   // print the network name (SSID);
     // Connect to WPA/WPA2 network:
     status = WiFi.begin(ssid, pass);
-    delay(1000);
+    delay(5000);
   }
   //sensor debug
   airsensor.debug();
@@ -91,6 +93,6 @@ void loop() {
   Serial.print("Response: ");
   Serial.println(response);
 
-  Serial.println("Wait five seconds");
-  delay(5000);
+  Serial.println("Wait thirty seconds");
+  delay(30000);
 }

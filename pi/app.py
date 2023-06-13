@@ -5,7 +5,7 @@ from werkzeug.exceptions import BadRequest
 from database import Database
 from configparser import ConfigParser
 from yaml import safe_load
-from datetime import datetime
+import os
 
 
 app = Flask(__name__)
@@ -20,14 +20,14 @@ kinds_of_data = config["data"]["kinds"].split(',')
 units = config["data"]["units"].split(',')
 value_classes = config["data"]["value_classes"].split(',')
 
-fr_file = open("langs/fr.yaml", 'r', encoding="utf-8")
-en_file = open("langs/en.yaml", 'r', encoding="utf-8")
-es_file = open("langs/es.yaml", 'r', encoding="utf-8")
-it_file = open("langs/it.yaml", 'r', encoding="utf-8")
+fr_file = open(os.path.join("langs","fr.yaml"), 'r', encoding="utf-8")
+en_file = open(os.path.join("langs", "en.yaml"), 'r', encoding="utf-8")
+es_file = open(os.path.join("langs", "es.yaml"), 'r', encoding="utf-8")
+it_file = open(os.path.join("langs", "it.yaml"), 'r', encoding="utf-8")
 
 
 try:
-    with open("langs/fr.yaml", 'r', encoding="utf-8") as f:
+    with open(os.path.join("langs", "fr.yaml"), 'r', encoding="utf-8") as f:
         print(safe_load(f))
 
     langs = {
