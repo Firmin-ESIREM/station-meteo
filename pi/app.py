@@ -70,11 +70,18 @@ def home():
         DATA_SPEC[k]["title"] = langs[lang][DATA_SPEC[k]["name"] + "-string"]
         DATA_SPEC[k]["value"] = data[DATA_SPEC[k]["name"]]
     print(DATA_SPEC)
+    now_hour = datetime.now().hour
+    if now_hour < 12:
+        greeting = "morning"
+    elif now_hour < 18:
+        greeting = "afternoon"
+    else:
+        greeting = "evening"
     return render_template(
         "index.html",
         lang=lang,
         title=langs[lang]["app-name"].capitalize(),
-        greeting=langs[lang]["greeting-morning"].capitalize(),
+        greeting=langs[lang][f"greeting-{greeting}"].capitalize(),
         name=config["user"]["name"],
         data_spec=DATA_SPEC
     )
