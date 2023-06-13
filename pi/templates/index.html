@@ -1,58 +1,33 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ lang }}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='index_style.css') }}">
-    <title>Station météo</title>
+    <title>{{ title }}</title>
 </head>
 <body>
     <div class="intro">
         <p class="hello">{{ greeting }}, {{ name }}.</p>
     </div>
     <div class="all-elements">
-        <a href="./archive/?data=temperature" class="element-link">
+        {% for element in data_spec %}
+        <a href="./archive/?data={{ element.name }}" class="element-link">
             <div class="element">
                 <div class="element-title">
-                    {{ temp_string }}
+                    {{ element.title }}
                 </div>
                 <div class="main-info">
-                    <span class="value" data-value="{{ temp }}"></span>
+                    <span class="value {{ element.value_class }}" data-value="{{ element.value }}"></span>
                     <span class="unit">
-                        {{ temp_unit }}
+                        {{ element.unit }}
                     </span>
                 </div>
             </div>
         </a>
+        {% endfor %}
 
-        <a href="./archive/?data=air_quality" class="element-link">
-            <div class="element">
-                <div class="element-title">
-                    {{ air_quality_string }}
-                </div>
-                <div class="main-info">
-                    <span class="value air-quality" data-value="{{ air_quality }}"></span>
-                    <span class="unit">
-                        {{ air_quality_unit }}
-                    </span>
-                </div>
-            </div>
-        </a>
-
-        <a href="./archive/?data=pressure" class="element-link">
-            <div class="element">
-                <div class="element-title">
-                    {{ pressure_string }}
-                </div>
-                <div class="main-info">
-                    <span class="value" data-value="{{ pressure }}"></span>
-                    <span class="unit">
-                        {{ pressure_unit }}
-                    </span>
-                </div>
-            </div>
-        </a>
     </div>
 </body>
 </html>

@@ -1,0 +1,8 @@
+app-name: "stazione meteorologica"
+temperature-string: "temperatura"
+air_quality-string: "qualità dell’aira"
+pressure-string: "pressione"
+humidity-string: "umidità"
+greeting-morning: "buongiorno"
+greeting-afternoon: "buon pomeriggio"
+greeting-evening: "buena sierra"

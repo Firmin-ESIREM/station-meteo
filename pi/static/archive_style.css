@@ -1,0 +1,38 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+    font-weight: bolder;
+    text-shadow: 3px 3px 3px grey;
+    transition: .15s;
+    text-align: center;
+    margin-top: 5%;
+    font-size: 400%;
+}
+
+h1:hover {
+    text-shadow: 5px 5px 5px grey;
+}
+
+
+.graph-wrapper {
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.graph {
+    height: 400px;
+    width: 600px;
+    border: solid 1px red;
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        background-color: #22202D;
+        color: #E5E2E2;
+        box-shadow: lightgray;
+        text-shadow: lightgray;
+    }
+}
