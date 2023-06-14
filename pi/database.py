@@ -1,6 +1,7 @@
 import sqlite3
 import mysql.connector
 from os import path
+from datetime import datetime
 from pathlib import Path
 
 
@@ -36,7 +37,7 @@ class Database:
 		self.connection.commit()
 		cursor.close()
 
-	def get_all_datas(self, data):
+	def get_all_specific_data(self, data):
 		cursor = self.connection.cursor()
 		cursor.execute(f"SELECT {data}, datetime FROM data")
 		values = cursor.fetchall()
@@ -45,6 +46,20 @@ class Database:
 		if values is None:
 			return [{"x": None, "y": None}]
 		return [{"x": date, "y": data_db} for data_db, date in values]
+
+	def get_all_data(self):
+		cursor = self.connection.cursor()
+		cursor.execute("SELECT * FROM data")
+		values = cursor.fetchall()
+		cursor.close()
+		if values is None:
+			return {"id": None, "temperature": None, "humidity": None, "air_quality": None, "pressure": None, "date": None}
+		liste = []
+		for value in values:
+			dictionary = {"id": value[0], "temperature": value[1], "humidity": value[2], "air_quality": value[3], "pressure": value[4], "date": value[5]}
+			liste.append(dictionary)
+		return liste
+
 	def get_last_data(self):
 		cursor = self.connection.cursor()
 		cursor.execute("SELECT * FROM data ORDER BY id DESC LIMIT 1")

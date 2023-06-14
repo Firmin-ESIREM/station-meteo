@@ -1,6 +1,6 @@
 """This is the Flask app."""
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from werkzeug.exceptions import BadRequest
 from database import Database
 from configparser import ConfigParser
@@ -88,6 +88,12 @@ def home():
     )
 
 
+@app.route("/download_data/")
+def download_data():
+    donnees = database.get_all_data()
+    return jsonify(donnees), 200
+
+
 
 @app.route("/archive/")
 def get_archived_data():
@@ -113,7 +119,7 @@ def archive_script():
     if data not in [d["name"] for d in DATA_SPEC]:
         print('bad request')
         return "nope", 403
-    all_data = database.get_all_datas(data)
+    all_data = database.get_all_specific_data(data)
     return render_template(
         "archive_script.js",
         chart_data=all_data
