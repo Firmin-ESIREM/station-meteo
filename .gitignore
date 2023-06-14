@@ -226,6 +226,7 @@ dmypy.json
 
 # pytype static type analyzer
 .pytype/
+.theia/
 
 # Cython debug symbols
 cython_debug/
