@@ -108,7 +108,8 @@ def get_archived_data():
     return render_template(
         "archive.html",
         data_name=langs[lang][f"{data}-string"],
-        data_title=data
+        data_title=data,
+        archive_string=langs[lang]["archive"]
     )
 
 
