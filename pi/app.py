@@ -73,7 +73,7 @@ def home():
 
     date = datetime.strptime(data["datetime"], "%Y-%m-%d %H:%M:%S")
     updated_time_py = datetime.now() - date
-    updated_time_str = f"{langs[lang]['updated']} "
+    updated_time_str = f"{langs[lang]['updated'].capitalize()} "
 
     if updated_time_py.days > 0:
         if updated_time_py.days == 1:
@@ -89,15 +89,15 @@ def home():
     nb_minutes = (updated_time_py.seconds % 3600) // 60
     if nb_minutes > 0:
         if nb_minutes == 1:
-            updated_time_str += f"""{nb_minutes} {langs[lang]["minute-singular"]} et """
+            updated_time_str += f"""{nb_minutes} {langs[lang]["minute-singular"]} {langs[lang]["and"]} """
         else:
-            updated_time_str += f"""{nb_minutes} {langs[lang]["minute-plural"]} et """
+            updated_time_str += f"""{nb_minutes} {langs[lang]["minute-plural"]} {langs[lang]["and"]} """
     nb_seconds = (updated_time_py.seconds % 3600) % 60
     if nb_seconds == 1:
-        updated_time_str += f"""{nb_seconds} {langs[lang]["second-singular"]}."""
+        updated_time_str += f"""{nb_seconds} {langs[lang]["second-singular"]}"""
     else:
-        updated_time_str += f"""{nb_seconds} {langs[lang]["second-plural"]}."""
-
+        updated_time_str += f"""{nb_seconds} {langs[lang]["second-plural"]}"""
+    updated_time_str += f"""{langs[lang]["updated-end"]}."""
     return render_template(
         "index.html",
         lang=lang,
