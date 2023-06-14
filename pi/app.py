@@ -75,7 +75,7 @@ def home():
     updated_time_py = datetime.now() - date
     updated_time_str = f"{langs[lang]['updated']} "
 
-    total_seconds = int(updated_time_py.total_seconds())
+    total_seconds = int(updated_time_py.total_seconds()) - 3600*2
 
     if total_seconds > 86400:
         days = total_seconds // 86400
