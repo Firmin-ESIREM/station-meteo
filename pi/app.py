@@ -75,28 +75,33 @@ def home():
     updated_time_py = datetime.now() - date
     updated_time_str = f"{langs[lang]['updated']} "
 
-    if updated_time_py.days > 0:
-        if updated_time_py.days == 1:
+    total_seconds = int(updated_time_py.total_seconds())
+
+    if total_seconds > 86400:
+        days = total_seconds // 86400
+        total_seconds -= days * 86400
+        if days == 1:
             updated_time_str += f"""{updated_time_py.days} {langs[lang]["day-singular"]}, """
         else:
             updated_time_str += f"""{updated_time_py.days} {langs[lang]["day-plural"]}, """
-    nb_hours = updated_time_py.seconds // 3600
-    if nb_hours > 0:
+    if total_seconds > 3600:
+        nb_hours = total_seconds // 3600
+        total_seconds -= nb_hours * 3600
         if nb_hours == 1:
             updated_time_str += f"""{nb_hours} {langs[lang]["hour-singular"]}, """
         else:
             updated_time_str += f"""{nb_hours} {langs[lang]["hour-plural"]}, """
-    nb_minutes = (updated_time_py.seconds % 3600) // 60
-    if nb_minutes > 0:
+    if total_seconds > 60:
+        nb_minutes = total_seconds // 60
+        total_seconds -= nb_minutes * 60
         if nb_minutes == 1:
             updated_time_str += f"""{nb_minutes} {langs[lang]["minute-singular"]} et """
         else:
             updated_time_str += f"""{nb_minutes} {langs[lang]["minute-plural"]} et """
-    nb_seconds = (updated_time_py.seconds % 3600) % 60
-    if nb_seconds == 1:
-        updated_time_str += f"""{nb_seconds} {langs[lang]["second-singular"]}."""
+    if total_seconds == 1:
+        updated_time_str += f"""{total_seconds} {langs[lang]["second-singular"]}."""
     else:
-        updated_time_str += f"""{nb_seconds} {langs[lang]["second-plural"]}."""
+        updated_time_str += f"""{total_seconds} {langs[lang]["second-plural"]}."""
 
     return render_template(
         "index.html",
