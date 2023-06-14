@@ -15,7 +15,7 @@ app = Flask(__name__)
 database = Database()
 
 config = ConfigParser()
-print(config.read("config.ini"))
+config.read("config.ini")
 
 kinds_of_data = config["data"]["kinds"].split(',')
 units = config["data"]["units"].split(',')
@@ -28,9 +28,6 @@ it_file = open(os.path.join("langs", "it.yaml"), 'r', encoding="utf-8")
 
 
 try:
-    with open(os.path.join("langs", "fr.yaml"), 'r', encoding="utf-8") as f:
-        print(safe_load(f))
-
     langs = {
         "fr": safe_load(fr_file),
         "en": safe_load(en_file),
@@ -55,8 +52,6 @@ for i, el in enumerate(kinds_of_data):
     })
 
 
-print(DATA_SPEC)
-
 
 @app.route("/")
 def home():
@@ -66,11 +61,8 @@ def home():
         lang = "en"
     data = database.get_last_data()
     for k in range(len(DATA_SPEC)):
-        # print(data_spec[k])
-        # print(data_spec[k]["value"])
         DATA_SPEC[k]["title"] = langs[lang][DATA_SPEC[k]["name"] + "-string"]
         DATA_SPEC[k]["value"] = data[DATA_SPEC[k]["name"]]
-    print(DATA_SPEC)
     now_hour = datetime.now().hour
     if now_hour < 12:
         greeting = "morning"
@@ -78,13 +70,42 @@ def home():
         greeting = "afternoon"
     else:
         greeting = "evening"
+
+    date = datetime.strptime(data["datetime"], "%Y-%m-%d %H:%M:%S")
+    updated_time_py = datetime.now() - date
+    updated_time_str = f"{langs[lang]['updated']} "
+
+    if updated_time_py.days > 0:
+        if updated_time_py.days == 1:
+            updated_time_str += f"""{updated_time_py.days} {langs[lang]["day-singular"]}, """
+        else:
+            updated_time_str += f"""{updated_time_py.days} {langs[lang]["day-plural"]}, """
+    nb_hours = updated_time_py.seconds // 3600
+    if nb_hours > 0:
+        if nb_hours == 1:
+            updated_time_str += f"""{nb_hours} {langs[lang]["hour-singular"]}, """
+        else:
+            updated_time_str += f"""{nb_hours} {langs[lang]["hour-plural"]}, """
+    nb_minutes = (updated_time_py.seconds % 3600) // 60
+    if nb_minutes > 0:
+        if nb_minutes == 1:
+            updated_time_str += f"""{nb_minutes} {langs[lang]["minute-singular"]} et """
+        else:
+            updated_time_str += f"""{nb_minutes} {langs[lang]["minute-plural"]} et """
+    nb_seconds = (updated_time_py.seconds % 3600) % 60
+    if nb_seconds == 1:
+        updated_time_str += f"""{nb_seconds} {langs[lang]["second-singular"]}."""
+    else:
+        updated_time_str += f"""{nb_seconds} {langs[lang]["second-plural"]}."""
+
     return render_template(
         "index.html",
         lang=lang,
         title=langs[lang]["app-name"].capitalize(),
         greeting=langs[lang][f"greeting-{greeting}"].capitalize(),
         name=config["user"]["name"],
-        data_spec=DATA_SPEC
+        data_spec=DATA_SPEC,
+        updated_time=updated_time_str
     )
 
 
@@ -100,7 +121,6 @@ def get_archived_data():
     global DATA_SPEC
     lang = request.accept_languages.best_match(langs.keys())
     if lang is None:
-        print('defaulting to english')
         lang = "en"
     data = request.args.get("data")
     if data not in [d["name"] for d in DATA_SPEC]:
@@ -115,9 +135,7 @@ def get_archived_data():
 @app.route("/archive_script.js")
 def archive_script():
     data = request.args.get("data")
-    print(data)
     if data not in [d["name"] for d in DATA_SPEC]:
-        print('bad request')
         return "nope", 403
     all_data = database.get_all_specific_data(data)
     return render_template(
