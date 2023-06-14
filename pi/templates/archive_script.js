@@ -7,6 +7,6 @@ const chart = JSC.chart('theChart', {
     axisToZoom: 'x',
     xAxis_defaultTick_enabled: false,
     legend_visible: false,
-    box_fill: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "#22202D" : "#FFFFFF",
+    box_fill: "rgba(0,0,0,0)",
     yAxis_alternateGridFill: "rgba(0,0,0,0)"
 });
