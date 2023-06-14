@@ -31,7 +31,6 @@ class Database:
 
 	def add_data(self, dictionary):
 		cursor = self.connection.cursor()
-		print(dictionary)
 		cursor.execute("INSERT INTO data (temperature, humidity, air_quality, pressure) VALUES (?, ?, ?, ?)", (
 			dictionary["temperature"], dictionary["humidity"], dictionary["air_quality"], dictionary["pressure"]))
 		self.connection.commit()
@@ -42,7 +41,6 @@ class Database:
 		cursor.execute(f"SELECT {data}, datetime FROM data")
 		values = cursor.fetchall()
 		cursor.close()
-		print(values)
 		if values is None:
 			return [{"x": None, "y": None}]
 		return [{"x": date, "y": data_db} for data_db, date in values]
