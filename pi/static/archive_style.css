@@ -27,8 +27,6 @@ h1:hover {
 .chart {
     height: 100%;
     width: 80%;
-    padding: 2%;
-    background-color: white;
 }
 
 @media (prefers-color-scheme: dark) {
