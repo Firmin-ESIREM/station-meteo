@@ -3,5 +3,5 @@ name =
 
 [data]
 kinds = temperature,pressure,air_quality,humidity
-units = Â°C,hPa,/3,%%
+units = °C,hPa,/3,%%
 value_classes = ,,air-quality,
