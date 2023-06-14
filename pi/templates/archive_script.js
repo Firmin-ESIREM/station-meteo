@@ -1,9 +1,10 @@
 params = new URLSearchParams(window.location.search)
 
-series = [ {name: params.get('data'), points: {{ chart_data }} } ]
+const series = [ {name: params.get('data'), points: {{ chart_data }} } ]
 
-JSC.chart('theChart', {
-    series: series
+const chart = JSC.chart('theChart', {
+    series: series,
+    axisToZoom: 'x',
+    xAxis_defaultTick_enabled: false,
+    legend_visible: false
 });
-
-
