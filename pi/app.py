@@ -1,11 +1,7 @@
 """This is the Flask app."""
 
 from flask import Flask, render_template, request, jsonify
-<<<<<<< HEAD
-from werkzeug.exceptions import BadRequest
-=======
 from werkzeug.exceptions import BadRequest, NotFound
->>>>>>> 90d9b703aec2369c57779c3160effef96d2f57e6
 from database import Database
 from configparser import ConfigParser
 from yaml import safe_load

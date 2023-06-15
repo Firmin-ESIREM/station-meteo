@@ -39,14 +39,9 @@ float Humidity_TempSensor::get_humidity_value()
 }
 void Humidity_TempSensor::debug()
 {
-<<<<<<< HEAD
-
-=======
   Serial.println("Humidity:");
   Serial.println(get_humidity_value());
 
   Serial.println("Temperature:");
   Serial.println(get_temp_value());
->>>>>>> 90d9b703aec2369c57779c3160effef96d2f57e6
-
 }
