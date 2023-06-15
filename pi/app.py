@@ -1,7 +1,11 @@
 """This is the Flask app."""
 
 from flask import Flask, render_template, request, jsonify
+<<<<<<< HEAD
 from werkzeug.exceptions import BadRequest
+=======
+from werkzeug.exceptions import BadRequest, NotFound
+>>>>>>> 90d9b703aec2369c57779c3160effef96d2f57e6
 from database import Database
 from configparser import ConfigParser
 from yaml import safe_load
@@ -73,7 +77,7 @@ def home():
 
     date = datetime.strptime(data["datetime"], "%Y-%m-%d %H:%M:%S")
     updated_time_py = datetime.now() - date
-    updated_time_str = f"{langs[lang]['updated']} "
+    updated_time_str = f"{langs[lang]['updated'].capitalize()} "
 
     total_seconds = int(updated_time_py.total_seconds()) - 3600*2
 
@@ -95,13 +99,15 @@ def home():
         nb_minutes = total_seconds // 60
         total_seconds -= nb_minutes * 60
         if nb_minutes == 1:
-            updated_time_str += f"""{nb_minutes} {langs[lang]["minute-singular"]} et """
+            updated_time_str += f"""{nb_minutes} {langs[lang]["minute-singular"]} {langs[lang]["and"]} """
         else:
-            updated_time_str += f"""{nb_minutes} {langs[lang]["minute-plural"]} et """
-    if total_seconds == 1:
-        updated_time_str += f"""{total_seconds} {langs[lang]["second-singular"]}."""
+            updated_time_str += f"""{nb_minutes} {langs[lang]["minute-plural"]} {langs[lang]["and"]} """
+    nb_seconds = (updated_time_py.seconds % 3600) % 60
+    if nb_seconds == 1:
+        updated_time_str += f"""{nb_seconds} {langs[lang]["second-singular"]}"""
     else:
-        updated_time_str += f"""{total_seconds} {langs[lang]["second-plural"]}."""
+        updated_time_str += f"""{nb_seconds} {langs[lang]["second-plural"]}"""
+    updated_time_str += f"""{langs[lang]["updated-end"]}."""
 
     return render_template(
         "index.html",
@@ -133,7 +139,8 @@ def get_archived_data():
     return render_template(
         "archive.html",
         data_name=langs[lang][f"{data}-string"],
-        data_title=data
+        data_title=data,
+        archive_string=langs[lang]["archive"]
     )
 
 
@@ -169,6 +176,15 @@ def add_data():
         dictionary["pressure"] = pressure
     database.add_data(dictionary)
     return 'OK', 201
+
+
+@app.route("/get_refresh_rate/")
+def get_refresh_rate():
+    refresh_rate = config["data"]["refresh_rate"]
+    if refresh_rate.isdigit():
+        return refresh_rate
+    else:
+        return NotFound
 
 
 if __name__ == "__main__":

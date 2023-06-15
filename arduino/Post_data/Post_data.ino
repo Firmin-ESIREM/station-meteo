@@ -1,14 +1,3 @@
-/*
-  Simple POST client for ArduinoHttpClient library
-  Connects to server once every five seconds, sends a POST request
-  and a request body
-
-  created 14 Feb 2016
-  modified 22 Jan 2019
-  by Tom Igoe
-  
-  this example is in the public domain
- */
 #include <ArduinoJson.h>
 #include <ArduinoHttpClient.h>
 #include <WiFiNINA.h>
@@ -30,6 +19,7 @@ int status = WL_IDLE_STATUS;
 AirSensor airsensor(A0);
 PressionSensor pressionsensor;
 Humidity_TempSensor humidity_tempsensor;
+int timer = 30;
 void setup() {
   Serial.begin(9600);
   while ( status != WL_CONNECTED) {
@@ -65,8 +55,15 @@ void loop() {
     delay(5000);
   }
   //sensor debug
-  airsensor.debug();
-  pressionsensor.debug();
+  //airsensor.debug();
+  //pressionsensor.debug();
+  //humidity_tempsensor.debug();
+  //
+  //Get data
+  client.get("/get_refresh_rate/");
+  String newtimer = client.responseBody();  
+  int val_timer = newtimer.toInt();
+  if(val_timer > 0) timer = val_timer;
   //
   Serial.println("making POST request");
   // Create Json
@@ -83,6 +80,7 @@ void loop() {
   String postData;
   serializeJson(doc, postData);
   client.post("/add_data/", contentType, postData);
+
   //
   // read the status code and body of the response
   int statusCode = client.responseStatusCode();
@@ -93,6 +91,5 @@ void loop() {
   Serial.print("Response: ");
   Serial.println(response);
 
-  Serial.println("Wait thirty seconds");
-  delay(30000);
+  delay(timer * 1000);
 }

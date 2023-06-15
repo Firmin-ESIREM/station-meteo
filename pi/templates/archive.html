@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='archive_style.css') }}">
-    <title>Station météo – archive de la {{ data_name }}</title>
+    <title>Station météo – {{ archive_string }} – {{ data_name }}</title>
 </head>
 <body>
-    <h1>Archive de la {{ data_name }}</h1>
+    <h1>{{ data_name.capitalize() }} – {{ archive_string }}</h1>
     <div class="chart-wrapper">
         <div id="theChart" class="chart"></div>
     </div>
