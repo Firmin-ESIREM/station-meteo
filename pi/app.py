@@ -1,7 +1,7 @@
 """This is the Flask app."""
 
 from flask import Flask, render_template, request, jsonify
-from werkzeug.exceptions import BadRequest
+from werkzeug.exceptions import BadRequest, NotFound
 from database import Database
 from configparser import ConfigParser
 from yaml import safe_load
@@ -172,6 +172,15 @@ def add_data():
         dictionary["pressure"] = pressure
     database.add_data(dictionary)
     return 'OK', 201
+
+
+@app.route("/get_refresh_rate/")
+def get_refresh_rate():
+    refresh_rate = config["data"]["refresh_rate"]
+    if refresh_rate.isdigit():
+        return refresh_rate
+    else:
+        return NotFound
 
 
 if __name__ == "__main__":

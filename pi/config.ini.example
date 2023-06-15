@@ -1,7 +1,8 @@
 [user]
-name =
+name = Giuseppe
 
 [data]
 kinds = temperature,pressure,air_quality,humidity
 units = °C,hPa,/3,%%
 value_classes = ,,air-quality,
+refresh_rate = 10
